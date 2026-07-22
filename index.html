@@ -1,14 +1,78 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b0e0c" />
-    <meta name="description" content="A cinematic photographic journey from Ethiopian coffee cherry to roasted bean and cup." />
-    <title>Buna Origin — The Life of One Bean</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0f0b">
+  <meta name="description" content="Buna Origin — a cinematic Ethiopian coffee journey from farm to cup.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Cellipse cx=%2232%22 cy=%2232%22 rx=%2218%22 ry=%2226%22 fill=%22%230a0f0b%22 stroke=%22%23f4ead8%22 stroke-width=%222%22 transform=%22rotate(20 32 32)%22/%3E%3Cpath d=%22M34 10c-2 15-7 29-8 44%22 stroke=%22%23f4ead8%22 fill=%22none%22 stroke-width=%222%22/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="site.css?v=3">
+  <title>Buna Origin — The Life of One Bean</title>
+</head>
+<body>
+  <div class="loader" id="loader" aria-live="polite">
+    <div class="loader-bean"><span></span></div>
+    <strong>BUNA ORIGIN</strong>
+    <div class="loader-line"><i></i></div>
+    <small>Preparing the journey</small>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#top"><span class="brand-mark"></span><b>Buna Origin</b></a>
+    <nav><a href="#journey">Journey</a><a href="#origins">Origins</a><a href="#contact">Contact</a></nav>
+    <span class="header-note">Ethiopian coffee experience</span>
+  </header>
+
+  <main id="top">
+    <section class="journey" id="journey">
+      <div class="journey-fixed">
+        <div class="scene is-active" data-scene="0" data-media="farm"></div>
+        <div class="scene" data-scene="1" data-media="selection"></div>
+        <div class="scene" data-scene="2" data-media="processing"></div>
+        <div class="scene" data-scene="3" data-media="roasting"></div>
+        <div class="scene" data-scene="4" data-media="roasting"></div>
+        <div class="scene" data-scene="5" data-media="cup"></div>
+        <div class="vignette"></div><div class="grain"></div><div class="warmth"></div>
+
+        <div class="chapter-rail"><span id="chapterCurrent">01</span><div><i id="railProgress"></i></div><span>06</span></div>
+
+        <div class="copy-panel">
+          <article class="copy is-active" data-copy="0"><p>Born at origin</p><h1>The journey begins as a ripe coffee cherry.</h1><span>Morning light, highland air and healthy coffee trees shape the first chapter of every remarkable cup.</span></article>
+          <article class="copy" data-copy="1"><p>Harvest and selection</p><h1>The fruit gives way to the seed inside.</h1><span>Ripe cherries are selected carefully before the seed is separated and prepared for processing.</span></article>
+          <article class="copy" data-copy="2"><p>Green coffee</p><h1>Processed, dried and prepared for export.</h1><span>Drying, sorting and grading protect the structure and character created at origin.</span></article>
+          <article class="copy" data-copy="3"><p>Transformed by heat</p><h1>Colour deepens as the roast develops.</h1><span>Controlled heat transforms the green seed and unlocks its aromatic potential.</span></article>
+          <article class="copy" data-copy="4"><p>Roasted coffee</p><h1>A finished bean carrying the character of origin.</h1><span>The roasted bean becomes the concentrated expression of place, process and craft.</span></article>
+          <article class="copy" data-copy="5"><p>From Ethiopia to the cup</p><h1>One bean becomes a complete coffee experience.</h1><span>The journey ends in a warm cup shaped by landscapes, people and careful preparation.</span><a href="#company">Explore the company ↓</a></article>
+        </div>
+
+        <div class="focus-label"><small>The life of</small><strong>One coffee bean</strong><i></i><em id="stageDetail">Farm · Highlands</em></div>
+
+        <aside class="fact-panel"><p>Current state</p><h2 id="stateLabel">Ripe cherry</h2><i></i><dl><div><dt>Journey</dt><dd id="percentLabel">00%</dd></div><div><dt>Chapter</dt><dd id="chapterLabel">01</dd></div><div><dt>Origin</dt><dd>Ethiopia</dd></div></dl></aside>
+        <div class="scroll-progress"><span>Scroll to transform</span><div><i id="bottomProgress"></i></div></div>
+      </div>
+      <div class="spacer" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </section>
+
+    <section class="company" id="company">
+      <div class="shell intro"><p class="kicker">A complete story from origin to cup</p><div><h2>Origin should be experienced before it is explained.</h2><article><p>Buna Origin is a fictional prototype ready for verified company information, sourcing regions, processing capacity, available lots, certifications and export contacts.</p><a href="#contact">Start an export enquiry ↗</a></article></div></div>
+
+      <div class="shell origins" id="origins"><p class="kicker">Coffee origins</p><h2>Coffees organised by place, process and availability.</h2><div class="origin-grid">
+        <article><img data-media-img="farm" alt="Ethiopian coffee highlands"><span>01</span><small>Example origin profile</small><h3>Guji</h3><p>Add verified process, altitude, grade and availability.</p></article>
+        <article><img data-media-img="processing" alt="Coffee processing station"><span>02</span><small>Example origin profile</small><h3>Sidama</h3><p>Add verified process, altitude, grade and availability.</p></article>
+        <article><img data-media-img="selection" alt="Coffee cherry selection"><span>03</span><small>Example origin profile</small><h3>Yirgacheffe</h3><p>Add verified process, altitude, grade and availability.</p></article>
+      </div></div>
+
+      <div class="shell process"><p class="kicker">Traceable process</p><h2>A clear operational story for buyers and partners.</h2><ol><li><span>01</span><b>Sourcing</b></li><li><span>02</span><b>Selection</b></li><li><span>03</span><b>Processing</b></li><li><span>04</span><b>Drying</b></li><li><span>05</span><b>Grading</b></li><li><span>06</span><b>Export preparation</b></li></ol></div>
+
+      <section class="contact" id="contact"><img data-media-img="cup" alt="Ethiopian coffee cup"><div><p class="kicker">Coffee export enquiry</p><h2>Let Ethiopia become the origin of your next coffee.</h2><a href="mailto:export@example.com">Request samples</a><a class="secondary" href="mailto:export@example.com">Contact export team</a><small>Demonstration contact details — replace before production use.</small></div></section>
+      <footer class="shell"><span class="brand"><i class="brand-mark"></i><b>Buna Origin</b></span><p>Fictional demonstration brand using custom-generated cinematic imagery.</p><a href="#top">Return to origin ↑</a></footer>
+    </section>
+  </main>
+  <script src="static-media/farm.js?v=3"></script>
+  <script src="static-media/selection.js?v=3"></script>
+  <script src="static-media/processing.js?v=3"></script>
+  <script src="static-media/roasting.js?v=3"></script>
+  <script src="static-media/cup.js?v=3"></script>
+  <script src="site.js?v=3" defer></script>
+</body>
 </html>
