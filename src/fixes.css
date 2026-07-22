@@ -1,0 +1,29 @@
+:root {
+  --depth-x: 0px;
+  --depth-y: 0px;
+}
+
+.coffee-stage {
+  transform: translate(var(--depth-x), var(--depth-y));
+}
+
+.coffee-stage__halo {
+  background:
+    radial-gradient(circle, rgba(237, 127, 64, .34), transparent 64%),
+    radial-gradient(circle, rgba(233, 218, 171, .13), transparent 56%);
+  opacity: clamp(.14, var(--heat-glow), .9);
+}
+
+.heat-field i {
+  top: 74%;
+}
+
+.experience:has(.stage-copy:nth-child(5).is-active) .taste-note {
+  opacity: .72;
+}
+
+@media (hover: none) {
+  .coffee-stage {
+    transform: none;
+  }
+}
