@@ -1,3 +1,4 @@
+import './safeAtob';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
@@ -12,7 +13,7 @@ window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
 
   if (!url.includes('.b64')) return response;
 
-  const normalized = (await response.text()).replace(/\s+/g, '');
+  const normalized = (await response.text()).replace(/[^A-Za-z0-9+/=_-]/g, '');
   return new Response(normalized, {
     status: response.status,
     statusText: response.statusText,
