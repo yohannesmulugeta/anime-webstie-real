@@ -2,6 +2,16 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './styles.css';
+import './fixes.css';
+
+const updateDepth = (event: PointerEvent) => {
+  const x = (event.clientX / window.innerWidth - 0.5) * 28;
+  const y = (event.clientY / window.innerHeight - 0.5) * 20;
+  document.documentElement.style.setProperty('--depth-x', `${x.toFixed(2)}px`);
+  document.documentElement.style.setProperty('--depth-y', `${y.toFixed(2)}px`);
+};
+
+window.addEventListener('pointermove', updateDepth, { passive: true });
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
