@@ -97,43 +97,63 @@ const segment = (progress: number, start: number, end: number) => clamp((progres
 const fadeWindow = (progress: number, start: number, peak: number, end: number) =>
   progress <= peak ? segment(progress, start, peak) : 1 - segment(progress, peak, end);
 
+function base64ToObjectUrl(base64: string) {
+  const normalized = base64.replace(/\s+/g, '');
+  const binary = window.atob(normalized);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+
+  return URL.createObjectURL(new Blob([bytes], { type: 'image/webp' }));
+}
+
 async function loadBase64Asset(parts: string[]) {
   const chunks = await Promise.all(
     parts.map(async (part) => {
       const response = await fetch(`${assetBase}${part}`);
-      if (!response.ok) throw new Error(`Unable to load ${part}`);
-      return (await response.text()).trim();
+      if (!response.ok) throw new Error(`Unable to load ${part}: ${response.status}`);
+      return response.text();
     }),
   );
 
-  return `data:image/webp;base64,${chunks.join('')}`;
+  return base64ToObjectUrl(chunks.join(''));
 }
 
 function useGeneratedMedia() {
   const [media, setMedia] = useState<GeneratedMedia | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
+    const objectUrls: string[] = [];
 
     Promise.all(
       (Object.entries(assetFiles) as [keyof GeneratedMedia, string[]][]).map(async ([key, parts]) => {
         const source = await loadBase64Asset(parts);
+        objectUrls.push(source);
         return [key, source] as const;
       }),
     )
       .then((entries) => {
-        if (!cancelled) setMedia(Object.fromEntries(entries) as GeneratedMedia);
+        if (cancelled) return;
+        setMedia(Object.fromEntries(entries) as GeneratedMedia);
+        setError(null);
       })
-      .catch((error) => {
-        console.error('Generated coffee imagery could not be loaded.', error);
+      .catch((loadError: unknown) => {
+        const message = loadError instanceof Error ? loadError.message : 'Unknown image loading error';
+        console.error('Generated coffee imagery could not be loaded.', loadError);
+        if (!cancelled) setError(message);
       });
 
     return () => {
       cancelled = true;
+      objectUrls.forEach((url) => URL.revokeObjectURL(url));
     };
   }, []);
 
-  return media;
+  return { media, error };
 }
 
 function BackgroundScene({
@@ -247,11 +267,11 @@ function CompanyContent({ media }: { media: GeneratedMedia }) {
 export default function App() {
   const appRef = useRef<HTMLDivElement>(null);
   const journeyRef = useRef<HTMLElement>(null);
-  const media = useGeneratedMedia();
+  const { media, error: mediaError } = useGeneratedMedia();
   const [progress, setProgress] = useState(0);
   const [activeStage, setActiveStage] = useState(0);
   const [introComplete, setIntroComplete] = useState(false);
-  const loading = !introComplete || !media;
+  const loading = !introComplete || (!media && !mediaError);
 
   useEffect(() => {
     let frame = 0;
@@ -330,6 +350,18 @@ export default function App() {
 
   const current = stages[activeStage];
   const percentage = Math.round(progress * 100);
+
+  if (mediaError) {
+    return (
+      <main className="asset-error" role="alert">
+        <span className="brand-mark" />
+        <p>Buna Origin</p>
+        <h1>The coffee images could not be prepared.</h1>
+        <small>{mediaError}</small>
+        <button type="button" onClick={() => window.location.reload()}>Reload website</button>
+      </main>
+    );
+  }
 
   return (
     <div ref={appRef} className={`real-app ${loading ? 'is-loading' : 'is-ready'}`}>
