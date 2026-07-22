@@ -22,8 +22,67 @@
   opacity: .72;
 }
 
+.photo-scene__image {
+  background-position: center center;
+}
+
+.photo-scene--farm .photo-scene__image {
+  filter: brightness(.78) saturate(.9) contrast(1.04);
+}
+
+.photo-scene--selection .photo-scene__image {
+  filter: brightness(.73) saturate(.92) contrast(1.06);
+}
+
+.photo-scene--selection .photo-scene__grade {
+  background:
+    linear-gradient(90deg, rgba(7, 10, 7, .76) 0%, rgba(7, 10, 7, .18) 46%, rgba(7, 10, 7, .42) 100%),
+    linear-gradient(0deg, rgba(7, 9, 7, .58), transparent 48%);
+}
+
+.photo-scene--processing .photo-scene__image {
+  filter: brightness(.72) saturate(.82) contrast(1.04);
+}
+
+.photo-scene--roasting .photo-scene__image {
+  filter: brightness(.72) saturate(.92) contrast(1.08);
+}
+
+.photo-scene--cup .photo-scene__image {
+  filter: brightness(.72) saturate(.9) contrast(1.06);
+}
+
+.scene-focus {
+  width: clamp(250px, 28vw, 470px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(246, 235, 213, .18);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 24px rgba(246, 235, 213, .025),
+    0 0 100px rgba(12, 8, 5, .28);
+  opacity: .42;
+  transform: translate(var(--depth-x), var(--depth-y));
+  transition: transform .22s ease-out;
+}
+
+.object-panel {
+  pointer-events: none;
+}
+
+@media (max-width: 820px) {
+  .scene-focus {
+    width: min(52vw, 280px);
+    opacity: .28;
+  }
+
+  .photo-scene__image {
+    background-position: center center;
+  }
+}
+
 @media (hover: none) {
-  .coffee-stage {
+  .coffee-stage,
+  .scene-focus {
     transform: none;
   }
 }
